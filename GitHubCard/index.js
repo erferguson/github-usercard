@@ -3,6 +3,9 @@
            https://api.github.com/users/<your name>
 */
 
+axios
+  .get('https://api.github.com/users/erferguson')
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -26,22 +29,69 @@
 
 const followersArray = [];
 
+function cardCreator(followersArray){
+
+  //.createElement 
+  const newCard = document.createElement('div');
+  const newIMG = document.createElement('img'); // image -- needs something 
+
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('p');
+  const userName = document.createElement('p');
+  const userLocation = document.createElement('p');
+  const ghProfile = document.createElement('p')
+  const ghAddress = document.createElement('a'); // a href tag -- needs something
+  const ghFollowers = document.createElement('p');
+  const ghFollowing = document.createElement('p');
+  const userBio = document.createElement('p');
+
+  // .classList
+  newCard.classList.add('card');
+
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  userName.classList.add('username');
+
+  // .textContent
+  userLocation.textContent = 'Location:';
+  ghProfile.textContent = 'Profile:';
+  ghFollowers.textContent = 'Followers:';
+  ghFollowing.textContent = 'Following:';
+  userBio.textContent = 'Bio:';
+
+  newCard.appendChild(newIMG);
+  newCard.appendChild(cardInfo);
+
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(userLocation);
+  cardInfo.appendChild(ghProfile);
+  ghProfile.appendChild(ghAddress);
+  cardInfo.appendChild(ghFollowers);
+  cardInfo.appendChild(ghFollowing);
+  cardInfo.appendChild(userBio);
+
+return newCard;
+}
+
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
-<div class="card">
+<div class="card"> // //
   <img src={image url of user} />
-  <div class="card-info">
-    <h3 class="name">{users name}</h3>
-    <p class="username">{users user name}</p>
-    <p>Location: {users location}</p>
-    <p>Profile:  
-      <a href={address to users github page}>{address to users github page}</a>
+
+  <div class="card-info"> // //
+    <h3 class="name">{users name}</h3> // //
+    <p class="username">{users user name}</p> // //
+    <p>Location: {users location}</p> //
+    <p>Profile:  //
+      <a href={address to users github page}>{address to users github page}</a> // 
     </p>
-    <p>Followers: {users followers count}</p>
-    <p>Following: {users following count}</p>
-    <p>Bio: {users bio}</p>
+    <p>Followers: {users followers count}</p>//
+    <p>Following: {users following count}</p> // 
+    <p>Bio: {users bio}</p> // 
   </div>
+
 </div>
 
 */
