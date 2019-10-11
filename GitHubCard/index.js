@@ -2,9 +2,21 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards');
 
 axios
   .get('https://api.github.com/users/erferguson')
+
+  .then(response => {
+    console.log(response);
+
+    const newCard = cardCreator(response.data);
+    cards.appendChild(newCard);
+  })
+
+  .catch (error => {
+    console.log('error, oh to error!', error)
+  });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -14,7 +26,7 @@ axios
 */
 
 /* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
+  create a new component and add it to the DOM as a child of .cards
 */
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
@@ -26,8 +38,33 @@ axios
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+const followersArray = [
+  "keirankozlowski",
+  "Miikis",
+  "LadyKerr",
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"
+];
 
-const followersArray = [];
+followersArray.forEach(followersArray => {
+  axios
+    .get(`https://api.github.com/users/${followersArray}`)
+
+    .then((response) => {
+      console.log(response);
+
+      const newCard = cardCreator(response.data);
+      cards.appendChild(newCard);
+    })
+
+    .catch(error => {
+      console.log('error, oh to error', error)
+    });
+})
+
 
 function cardCreator(followersArray){
 
@@ -36,11 +73,11 @@ function cardCreator(followersArray){
   const newIMG = document.createElement('img'); // image -- needs something 
 
   const cardInfo = document.createElement('div');
-  const name = document.createElement('p');
+  const name = document.createElement('h3');
   const userName = document.createElement('p');
   const userLocation = document.createElement('p');
   const ghProfile = document.createElement('p')
-  const ghAddress = document.createElement('a'); // a href tag -- needs something
+  const ghAddress = document.createElement('a'); 
   const ghFollowers = document.createElement('p');
   const ghFollowing = document.createElement('p');
   const userBio = document.createElement('p');
@@ -53,12 +90,21 @@ function cardCreator(followersArray){
   userName.classList.add('username');
 
   // .textContent
-  userLocation.textContent = 'Location:';
-  ghProfile.textContent = 'Profile:';
-  ghFollowers.textContent = 'Followers:';
-  ghFollowing.textContent = 'Following:';
-  userBio.textContent = 'Bio:';
+  newIMG.src = followersArray.avatar_url;
+  name.textContent = followersArray.name;
+  userName.textContent = followersArray.login;
 
+  userLocation.textContent = `Location: ${followersArray.location}`;
+
+  // ghProfile.href = `${followersArray.html_url}`;
+  ghProfile.textContent = `Profile: ${followersArray.html_url}`
+
+  ghFollowers.textContent = `Followers: ${followersArray.followers}`;
+  ghFollowing.textContent = `Following: ${followersArray.following}`;
+
+  userBio.textContent = `Bio: ${followersArray.bio}`;
+
+  // .appendChild
   newCard.appendChild(newIMG);
   newCard.appendChild(cardInfo);
 
